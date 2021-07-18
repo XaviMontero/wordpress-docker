@@ -44,7 +44,7 @@ services:
       - WORDPRESS_DB_NAME=db1
       - VIRTUAL_HOST=www.vazquezflooringny.com,vazquezflooringny.com
       - WORDPRESS_DB_USER=db1user
-      - WORDPRESS_DB_PASSWORD=Tambo2016.
+      - WORDPRESS_DB_PASSWORD=123456789
       - LETSENCRYPT_HOST=www.vazquezflooringny.com,vazquezflooringny.com
       - LETSENCRYPT_EMAIL=xmontero@luvefintech.com
     networks:
@@ -56,10 +56,10 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=Tambo2016.
+      - MYSQL_ROOT_PASSWORD=123456789
       - MYSQL_DATABASE=db1
       - MYSQL_USER=db1user
-      - MYSQL_PASSWORD=Tambo2016.
+      - MYSQL_PASSWORD=123456789
     networks:
       - dockerwp
 networks:

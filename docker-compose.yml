@@ -1,0 +1,78 @@
+version: '3'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+    networks:
+      - dockerwp
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - dockerwp
+  wordpress:
+    depends_on:
+      - mariadb
+      - nginx-proxy
+      - letsencrypt
+    image: wordpress
+    volumes:
+      - wordpress:/var/www/html 
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./php.ini:/var/www/html/wp-admin/php.ini
+    expose:
+      - 80
+    environment:
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_NAME=db1
+      - VIRTUAL_HOST=vazquezflooringny.com,www.vazquezflooringny.com
+      - WORDPRESS_DB_USER=db1user
+      - WORDPRESS_DB_PASSWORD=Tambo2016.
+      - LETSENCRYPT_HOST=vazquezflooringny.com,www.vazquezflooringny.com
+      - LETSENCRYPT_EMAIL=oxmonteroc83@est.ucacue.edu.ec
+    networks:
+      - dockerwp
+    restart: always
+  mariadb:
+    restart: always
+    image: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Tambo2016.
+      - MYSQL_DATABASE=db1
+      - MYSQL_USER=db1user
+      - MYSQL_PASSWORD=Tambo2016.
+    networks:
+      - dockerwp
+networks:
+  dockerwp:
+volumes:
+  certs:
+  html:
+  vhostd:
+  wordpress:
+  mariadb:
+  mariadb_data:
+    driver: local
+
+
+    

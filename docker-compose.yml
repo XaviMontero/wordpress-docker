@@ -42,11 +42,11 @@ services:
     environment:
       - WORDPRESS_DB_HOST=mariadb:3306
       - WORDPRESS_DB_NAME=db1
-      - VIRTUAL_HOST=www.vazquezflooringny.com,vazquezflooringny.com
+      - VIRTUAL_HOST=www.amiraeventos.com,amiraeventos.com
       - WORDPRESS_DB_USER=db1user
       - WORDPRESS_DB_PASSWORD=123456789
-      - LETSENCRYPT_HOST=www.vazquezflooringny.com,vazquezflooringny.com
-      - LETSENCRYPT_EMAIL=xmontero@luvefintech.com
+      - LETSENCRYPT_HOST=www.amiraeventos.com,amiraeventos.com
+      - LETSENCRYPT_EMAIL=el300profe@gmail.com
     networks:
       - dockerwp
     restart: always
